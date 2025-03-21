@@ -1,0 +1,476 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "SynapseAI API",
+    "description": "API collection for SynapseAI - Behavior-Driven Automation & AI Talent Marketplace",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "description": "User management operations",
+      "item": [
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"picture\": \"https://example.com/profile.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"]
+            },
+            "description": "Creates a new user in the system or returns an existing user if the email already exists"
+          },
+          "response": [
+            {
+              "name": "User Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"picture\": \"https://example.com/profile.jpg\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/users",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["users"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_id\": \"user123\",\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"picture\": \"https://example.com/profile.jpg\",\n  \"credits\": 500\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get User by Email",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users?email=john.doe@example.com",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "john.doe@example.com",
+                  "description": "Email of the user to retrieve"
+                }
+              ]
+            },
+            "description": "Returns a user by email"
+          },
+          "response": [
+            {
+              "name": "User Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/users?email=john.doe@example.com",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["users"],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "john.doe@example.com"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_id\": \"user123\",\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"picture\": \"https://example.com/profile.jpg\",\n  \"credits\": 500\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Authentication",
+      "description": "Authentication operations",
+      "item": [
+        {
+          "name": "Google Authentication",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"google-oauth-token-123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/google",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "google"]
+            },
+            "description": "Authenticates a user with Google OAuth"
+          },
+          "response": [
+            {
+              "name": "Authentication Successful",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"google-oauth-token-123\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/auth/google",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["auth", "google"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"user\": {\n    \"_id\": \"user123\",\n    \"name\": \"John Doe\",\n    \"email\": \"john.doe@example.com\",\n    \"picture\": \"https://example.com/profile.jpg\",\n    \"credits\": 500\n  },\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "AI Agents",
+      "description": "AI agent operations",
+      "item": [
+        {
+          "name": "Get All Agents",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/agents",
+              "host": ["{{baseUrl}}"],
+              "path": ["agents"]
+            },
+            "description": "Returns a list of all available AI agents"
+          },
+          "response": [
+            {
+              "name": "Agents Retrieved",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/agents",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["agents"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"_id\": \"agent123\",\n    \"name\": \"Email Assistant\",\n    \"description\": \"AI agent that handles email communication in your style\",\n    \"price\": 9.99,\n    \"ownerId\": \"user123\",\n    \"capabilities\": [\"email\", \"scheduling\", \"follow-ups\"],\n    \"imageUrl\": \"https://example.com/agent.jpg\",\n    \"createdAt\": \"2023-01-01T00:00:00Z\",\n    \"updatedAt\": \"2023-01-01T00:00:00Z\"\n  },\n  {\n    \"_id\": \"agent456\",\n    \"name\": \"Social Media Manager\",\n    \"description\": \"AI agent that manages social media accounts\",\n    \"price\": 14.99,\n    \"ownerId\": \"user456\",\n    \"capabilities\": [\"posting\", \"engagement\", \"analytics\"],\n    \"imageUrl\": \"https://example.com/social.jpg\",\n    \"createdAt\": \"2023-01-02T00:00:00Z\",\n    \"updatedAt\": \"2023-01-02T00:00:00Z\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Create Agent",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Email Assistant\",\n  \"description\": \"AI agent that handles email communication in your style\",\n  \"price\": 9.99,\n  \"ownerId\": \"user123\",\n  \"capabilities\": [\"email\", \"scheduling\", \"follow-ups\"],\n  \"imageUrl\": \"https://example.com/agent.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/agents",
+              "host": ["{{baseUrl}}"],
+              "path": ["agents"]
+            },
+            "description": "Creates a new AI agent in the marketplace"
+          },
+          "response": [
+            {
+              "name": "Agent Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Email Assistant\",\n  \"description\": \"AI agent that handles email communication in your style\",\n  \"price\": 9.99,\n  \"ownerId\": \"user123\",\n  \"capabilities\": [\"email\", \"scheduling\", \"follow-ups\"],\n  \"imageUrl\": \"https://example.com/agent.jpg\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/agents",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["agents"]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_id\": \"agent123\",\n  \"name\": \"Email Assistant\",\n  \"description\": \"AI agent that handles email communication in your style\",\n  \"price\": 9.99,\n  \"ownerId\": \"user123\",\n  \"capabilities\": [\"email\", \"scheduling\", \"follow-ups\"],\n  \"imageUrl\": \"https://example.com/agent.jpg\",\n  \"createdAt\": \"2023-01-01T00:00:00Z\",\n  \"updatedAt\": \"2023-01-01T00:00:00Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Agent by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/agents/agent123",
+              "host": ["{{baseUrl}}"],
+              "path": ["agents", "agent123"]
+            },
+            "description": "Returns an AI agent by ID"
+          },
+          "response": [
+            {
+              "name": "Agent Retrieved",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/agents/agent123",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["agents", "agent123"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_id\": \"agent123\",\n  \"name\": \"Email Assistant\",\n  \"description\": \"AI agent that handles email communication in your style\",\n  \"price\": 9.99,\n  \"ownerId\": \"user123\",\n  \"capabilities\": [\"email\", \"scheduling\", \"follow-ups\"],\n  \"imageUrl\": \"https://example.com/agent.jpg\",\n  \"createdAt\": \"2023-01-01T00:00:00Z\",\n  \"updatedAt\": \"2023-01-01T00:00:00Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Agent",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Email Assistant\",\n  \"description\": \"Updated AI agent that handles email communication in your style\",\n  \"price\": 12.99,\n  \"ownerId\": \"user123\",\n  \"capabilities\": [\"email\", \"scheduling\", \"follow-ups\", \"templates\"],\n  \"imageUrl\": \"https://example.com/updated-agent.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/agents/agent123",
+              "host": ["{{baseUrl}}"],
+              "path": ["agents", "agent123"]
+            },
+            "description": "Updates an existing AI agent in the marketplace"
+          },
+          "response": [
+            {
+              "name": "Agent Updated",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Updated Email Assistant\",\n  \"description\": \"Updated AI agent that handles email communication in your style\",\n  \"price\": 12.99,\n  \"ownerId\": \"user123\",\n  \"capabilities\": [\"email\", \"scheduling\", \"follow-ups\", \"templates\"],\n  \"imageUrl\": \"https://example.com/updated-agent.jpg\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/agents/agent123",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["agents", "agent123"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_id\": \"agent123\",\n  \"name\": \"Updated Email Assistant\",\n  \"description\": \"Updated AI agent that handles email communication in your style\",\n  \"price\": 12.99,\n  \"ownerId\": \"user123\",\n  \"capabilities\": [\"email\", \"scheduling\", \"follow-ups\", \"templates\"],\n  \"imageUrl\": \"https://example.com/updated-agent.jpg\",\n  \"createdAt\": \"2023-01-01T00:00:00Z\",\n  \"updatedAt\": \"2023-01-03T00:00:00Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Agent",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/agents/agent123",
+              "host": ["{{baseUrl}}"],
+              "path": ["agents", "agent123"]
+            },
+            "description": "Deletes an AI agent from the marketplace"
+          },
+          "response": [
+            {
+              "name": "Agent Deleted",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/agents/agent123",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["agents", "agent123"]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": "text"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3001/api",
+      "type": "string"
+    },
+    {
+      "key": "authToken",
+      "value": "your-auth-token-here",
+      "type": "string"
+    }
+  ]
+}
