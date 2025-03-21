@@ -1,0 +1,631 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SynapseAI API",
+    "description": "API documentation for SynapseAI - Behavior-Driven Automation & AI Talent Marketplace",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Suhaib",
+      "url": "https://github.com/suhaib3100"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.synapseai.example.com/v1",
+      "description": "Production server"
+    },
+    {
+      "url": "https://staging-api.synapseai.example.com/v1",
+      "description": "Staging server"
+    },
+    {
+      "url": "http://localhost:3001/api",
+      "description": "Local development server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Users",
+      "description": "User management operations"
+    },
+    {
+      "name": "Authentication",
+      "description": "Authentication operations"
+    },
+    {
+      "name": "AI Agents",
+      "description": "AI agent operations"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create a new user",
+        "description": "Creates a new user in the system or returns an existing user if the email already exists",
+        "operationId": "createUser",
+        "requestBody": {
+          "description": "User object that needs to be created",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User created or existing user returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user by email",
+        "description": "Returns a user by email",
+        "operationId": "getUserByEmail",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "description": "Email of the user to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "email"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/google": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Authenticate with Google",
+        "description": "Authenticates a user with Google OAuth",
+        "operationId": "googleAuth",
+        "requestBody": {
+          "description": "Google OAuth token",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["token"],
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "description": "Google OAuth token"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful authentication",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agents": {
+      "get": {
+        "tags": ["AI Agents"],
+        "summary": "Get all AI agents",
+        "description": "Returns a list of all available AI agents",
+        "operationId": "getAgents",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Agent"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["AI Agents"],
+        "summary": "Create a new AI agent",
+        "description": "Creates a new AI agent in the marketplace",
+        "operationId": "createAgent",
+        "requestBody": {
+          "description": "Agent object that needs to be created",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Agent created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Agent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agents/{id}": {
+      "get": {
+        "tags": ["AI Agents"],
+        "summary": "Get agent by ID",
+        "description": "Returns an AI agent by ID",
+        "operationId": "getAgentById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the agent to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Agent"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Agent not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["AI Agents"],
+        "summary": "Update an existing agent",
+        "description": "Updates an existing AI agent in the marketplace",
+        "operationId": "updateAgent",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the agent to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Agent object that needs to be updated",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agent updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Agent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Agent not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["AI Agents"],
+        "summary": "Delete an agent",
+        "description": "Deletes an AI agent from the marketplace",
+        "operationId": "deleteAgent",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the agent to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Agent deleted"
+          },
+          "404": {
+            "description": "Agent not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserInput": {
+        "type": "object",
+        "required": ["name", "email", "picture"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "john.doe@example.com"
+          },
+          "picture": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://example.com/profile.jpg"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "required": ["name", "email", "picture", "credits"],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "user123"
+          },
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "john.doe@example.com"
+          },
+          "picture": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://example.com/profile.jpg"
+          },
+          "credits": {
+            "type": "integer",
+            "example": 500
+          },
+          "orderId": {
+            "type": "string",
+            "example": "order123",
+            "nullable": true
+          }
+        }
+      },
+      "AgentInput": {
+        "type": "object",
+        "required": ["name", "description", "price", "ownerId"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Email Assistant"
+          },
+          "description": {
+            "type": "string",
+            "example": "AI agent that handles email communication in your style"
+          },
+          "price": {
+            "type": "number",
+            "format": "float",
+            "example": 9.99
+          },
+          "ownerId": {
+            "type": "string",
+            "example": "user123"
+          },
+          "capabilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": ["email", "scheduling", "follow-ups"]
+          },
+          "imageUrl": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://example.com/agent.jpg"
+          }
+        }
+      },
+      "Agent": {
+        "type": "object",
+        "required": ["name", "description", "price", "ownerId"],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "agent123"
+          },
+          "name": {
+            "type": "string",
+            "example": "Email Assistant"
+          },
+          "description": {
+            "type": "string",
+            "example": "AI agent that handles email communication in your style"
+          },
+          "price": {
+            "type": "number",
+            "format": "float",
+            "example": 9.99
+          },
+          "ownerId": {
+            "type": "string",
+            "example": "user123"
+          },
+          "capabilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": ["email", "scheduling", "follow-ups"]
+          },
+          "imageUrl": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://example.com/agent.jpg"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-01-01T00:00:00Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-01-01T00:00:00Z"
+          }
+        }
+      },
+      "AuthResponse": {
+        "type": "object",
+        "required": ["user", "token"],
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": ["code", "message"],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "example": 400
+          },
+          "message": {
+            "type": "string",
+            "example": "Invalid input"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}

@@ -86,6 +86,49 @@ SynapseAI combines **AI-driven behavioral cloning** with a **crowdsourced market
 | `/api/agents` | GET | Fetch marketplace agents |
 | `/api/agents/deploy` | POST | Publish new agent (Convex mutation) |
 
+## 🧪 Testing
+
+SynapseAI uses Jest for unit testing both frontend and backend components. Tests are organized in the `__tests__` directory.
+
+### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode (for development)
+npm run test:watch
+
+# Run tests with coverage report
+npm test -- --coverage
+```
+
+For more details on testing, see [Testing Documentation](docs/testing.md).
+
+## 📚 API Documentation
+
+The SynapseAI API is documented using both Swagger and Postman:
+
+### Swagger Documentation
+
+The Swagger documentation provides a comprehensive overview of all API endpoints, request/response schemas, and authentication requirements.
+
+- [Swagger JSON](docs/swagger.json) - Raw Swagger definition
+- To view the Swagger UI:
+  1. Install Swagger UI: `npm install -g swagger-ui-cli`
+  2. Run: `swagger-ui-cli serve docs/swagger.json`
+  3. Open: `http://localhost:3001/docs`
+
+### Postman Collection
+
+A Postman collection is available for testing the API endpoints:
+
+1. [Download Postman Collection](docs/postman_collection.json)
+2. Import into Postman
+3. Set up environment variables:
+   - `baseUrl`: `http://localhost:3001/api`
+   - `authToken`: Your authentication token
+
 ## 🚢 Deployment
 1. **Frontend**: Deploy Next.js app to Vercel
 2. **Backend**: Use Convex Cloud for real-time DB/API
@@ -108,6 +151,8 @@ npm run build
 3. Commit changes: `git commit -m 'Add some feature'`
 4. Push: `git push origin feature/your-idea`
 5. Open a PR with detailed descriptions
+6. Ensure all tests pass: `npm test`
+7. Add tests for new features
 
 ## 📜 License
 Distributed under the MIT License. See [LICENSE](LICENSE) for details.
